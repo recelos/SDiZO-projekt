@@ -13,9 +13,7 @@ void Table::add_to_beginning(int value)
     temp[0] = value;
 
     for(int i = 0; i < size; i++)
-    {
         temp[i+1] = start[i];
-    }
 
     delete start;
     start = temp;
@@ -29,9 +27,7 @@ void Table::add_to_end(int value)
     temp[size] = value;
 
     for(int i = 0; i < size; i++)
-    {
         temp[i] = start[i];
-    }
 
     delete start;
     start = temp;

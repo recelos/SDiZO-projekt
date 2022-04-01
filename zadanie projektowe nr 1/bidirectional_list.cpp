@@ -53,6 +53,7 @@ void BidirectionalList::delete_end()
 {
     if(start == NULL)
     {
+        std::cout << "Brak elementu do usuniecia\n";
         return;
     }
     else if (start->next == NULL)
@@ -95,34 +96,43 @@ void BidirectionalList::add_to_end(int value)
         to_add->value = value;
         to_add->previous = temp;
         to_add->next = NULL;
-        ++size;
+        size++;
     }
 }
 
-void BidirectionalList::add_to_index(int value, int index)
+void BidirectionalList::add_to_index(int index, int value)
 {
     if((!start && index!=0) || ( index < 0 || index > size))
-    {
-        std::cout << "Indeks wykracza poza zakres listy";
-    }
-    else if(index==0)
-    {
+        std::cout << "Indeks wykracza poza zakres listy\n";
+
+    else if(index==0)    
         add_to_beginning(value);
-    }
+    
     else if (index==size)
-    {
         add_to_end(value);
-    }
+
     else
     {
+        list_element * temp = start;
+        for (int i = 1; i < index; i++)
+            temp = temp -> next;
+        
+        list_element * to_add = new list_element;
+        to_add -> value = value;
+        to_add -> next = temp -> next;
+        to_add -> previous = temp;
 
+        temp -> next -> previous = to_add;
+        temp -> next = to_add;
+
+        size++;
     }
 }
 void BidirectionalList::delete_at_index(int index)
 {
-    if((!start && index!=0) || ( index < 0 || index >= size))
+    if(( index < 0 || index >= size))
     {
-        std::cout << "Indeks wykracza poza zakres listy" << std::endl;
+        std::cout << "Indeks wykracza poza zakres listy\n";
     }
     else if(index==0)
     {
@@ -134,7 +144,27 @@ void BidirectionalList::delete_at_index(int index)
     }
     else
     {
+        list_element * temp = start;
+        for (int i = 0; i < index - 1; i++)
+            temp = temp -> next;
 
+        list_element * news = temp -> next;
+
+        temp -> next = news -> next;
+        temp -> next -> previous = news;
+
+        delete[] news;
+
+        size--;
+
+        if (size == 0)
+        {
+            delete start;
+            start = new list_element;
+            start -> next = NULL;
+            start -> previous = NULL;
+        }
+        
     }
 }
 
@@ -144,27 +174,38 @@ void BidirectionalList::search(int value)
 {
     if(!start)
     {
-        std::cout << "Lista jest pusta" << std::endl;
+        std::cout << "Lista jest pusta\n" << std::endl;
     }
     else
     {
         list_element * temp = start;
-        unsigned counter = 0;
+        int i = 0;
         while(temp->next)
         {
-            if(temp->value == value) 
-                counter++; 
+            if(temp->value == value)
+            {
+                std::cout << "Znaleziono element " << value << " na indeksie: " << i << std::endl;
+                return;
+            } 
             temp = temp->next;
+            i++;
         }
-        if(temp->value == value) 
-            counter++; 
-        std::cout << "Znaleziono:" << counter << " elementow o wartosci " << value << std::endl;
+        if(temp->value == value)
+        {
+            std::cout << "Znaleziono element " << value << " na indeksie: " << i << std::endl;
+            return;
+        }
+        std::cout << "Nie znaleziono elementu " << value << " w liscie\n";
     }
 }
 
 void BidirectionalList::print()
 {
-    if(!start)  std::cout << "Lista jest pusta\n";
+    if(!start)
+    {
+        std::cout << "Lista jest pusta\n";
+        return;
+    }  
 
     list_element * temp = start;
 
@@ -178,24 +219,28 @@ void BidirectionalList::print()
 
 int main(){
     BidirectionalList * list = new BidirectionalList();
-    // list->add_to_end(5);
-    // list->add_to_end(4);
-    // list->add_to_end(2342);
-    // list->add_to_end(232342);  
-    // list->add_to_beginning(1);
-    // list->add_to_end(4);  
-    // list->add_to_beginning(2);
-    // list->print();
-    // list->add_to_index(41, 7);
-    // list->add_to_index(41, 0);
-    // list->print();
-    // list->delete_beginning();
-    // list->print();
-    list->add_to_index(4,0);
-    list->add_to_index(5,1);
-    list->add_to_index(6,2);
-    list->print();
-    // list->delete_beginning();
-    list->delete_at_index(2);
-    list->print();
+
+    list -> add_to_beginning(4);
+    // list -> add_to_end(5);
+    // list -> add_to_end(6);
+    // list -> add_to_end(7);
+
+
+
+    // list -> add_to_index(2, 1);
+
+    list -> print();
+
+
+    list -> delete_at_index(0);
+    list -> print();
+
+    list -> add_to_beginning(6);
+    list -> add_to_end(6);
+
+
+    list -> print();
+
+    // list->search(345);
+    list->search(6);
 }
