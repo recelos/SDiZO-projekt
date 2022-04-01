@@ -1,8 +1,10 @@
 class Table
 {
     private:
+        // wskaznik na pierwszy element tablicy
         int * start;
-        int rozmiar;
+        // zmienna przechowujaca rozmiar tablicy
+        unsigned size;
     public:
         Table();
         // DODAWANIE ELEMENTU

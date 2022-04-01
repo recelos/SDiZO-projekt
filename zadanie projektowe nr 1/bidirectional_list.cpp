@@ -3,13 +3,14 @@
 
 BidirectionalList::BidirectionalList()
 {
-    BidirectionalList::start = NULL;
+    start = NULL;
     size = 0;
 }
 
 void BidirectionalList::add_to_beginning(int value)
 {
-    if(start == NULL){
+    if(start == NULL)
+    {
         start = new list_element;
         start->value=value;
         start->previous=NULL;
@@ -119,7 +120,7 @@ void BidirectionalList::add_to_index(int value, int index)
 }
 void BidirectionalList::delete_at_index(int index)
 {
-        if((!start && index!=0) || ( index < 0 || index > size))
+    if((!start && index!=0) || ( index < 0 || index >= size))
     {
         std::cout << "Indeks wykracza poza zakres listy" << std::endl;
     }
@@ -127,7 +128,7 @@ void BidirectionalList::delete_at_index(int index)
     {
         delete_beginning();
     }
-    else if (index==size)
+    else if (index==size-1)
     {
         delete_end();
     }
@@ -161,7 +162,8 @@ void BidirectionalList::search(int value)
     }
 }
 
-void BidirectionalList::print(){
+void BidirectionalList::print()
+{
     if(!start)  std::cout << "Lista jest pusta\n";
 
     list_element * temp = start;
@@ -189,8 +191,11 @@ int main(){
     // list->print();
     // list->delete_beginning();
     // list->print();
-    list->add_to_index(4,1);
+    list->add_to_index(4,0);
+    list->add_to_index(5,1);
+    list->add_to_index(6,2);
     list->print();
-    list->delete_beginning();
+    // list->delete_beginning();
+    list->delete_at_index(2);
     list->print();
 }
