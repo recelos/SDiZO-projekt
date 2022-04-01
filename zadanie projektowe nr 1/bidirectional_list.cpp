@@ -4,7 +4,7 @@
 BidirectionalList::BidirectionalList()
 {
     BidirectionalList::start = NULL;
-    rozmiar = 0;
+    size = 0;
 }
 
 void BidirectionalList::add_to_beginning(int value)
@@ -14,16 +14,18 @@ void BidirectionalList::add_to_beginning(int value)
         start->value=value;
         start->previous=NULL;
         start->next=NULL;
-        rozmiar=1;
+        size=1;
     }
-
+    else
+    {    
     list_element * to_add = new list_element;
-
     to_add->value = value;
     to_add->next = start;
     start->previous = to_add;
     start = to_add;
-    ++rozmiar;
+    size++;
+    }
+
 }
 void BidirectionalList::delete_beginning()
 {
@@ -35,14 +37,14 @@ void BidirectionalList::delete_beginning()
     {
         delete start;
         start = NULL;
-        rozmiar = 0;
+        size = 0;
     }
     else
     {
         start = start->next;
         delete start->previous;
         start->previous = NULL;
-        rozmiar--;
+        size--;
     }
 }
 
@@ -56,7 +58,7 @@ void BidirectionalList::delete_end()
     {
         delete start;
         start = NULL;
-        rozmiar = 0;
+        size = 0;
     }
     else
     {
@@ -65,7 +67,7 @@ void BidirectionalList::delete_end()
             temp = temp -> next;
         temp -> previous -> next = NULL;
         temp = NULL;
-        --rozmiar;
+        --size;
     }
 }
 
@@ -78,25 +80,64 @@ void BidirectionalList::add_to_end(int value)
         start->value=value;
         start->previous=NULL;
         start->next=NULL;
-        rozmiar = 1;
+        size = 1;
     }
     else
     {
         list_element * temp = start;
 
         while (temp->next)
-        {
             temp = temp->next;
-        }
         
         list_element * to_add = new list_element;
         temp->next = to_add;
         to_add->value = value;
         to_add->previous = temp;
         to_add->next = NULL;
-        ++rozmiar;
+        ++size;
     }
 }
+
+void BidirectionalList::add_to_index(int value, int index)
+{
+    if((!start && index!=0) || ( index < 0 || index > size))
+    {
+        std::cout << "Indeks wykracza poza zakres listy";
+    }
+    else if(index==0)
+    {
+        add_to_beginning(value);
+    }
+    else if (index==size)
+    {
+        add_to_end(value);
+    }
+    else
+    {
+
+    }
+}
+void BidirectionalList::delete_at_index(int index)
+{
+        if((!start && index!=0) || ( index < 0 || index > size))
+    {
+        std::cout << "Indeks wykracza poza zakres listy" << std::endl;
+    }
+    else if(index==0)
+    {
+        delete_beginning();
+    }
+    else if (index==size)
+    {
+        delete_end();
+    }
+    else
+    {
+
+    }
+}
+
+
 
 void BidirectionalList::search(int value)
 {
@@ -130,21 +171,26 @@ void BidirectionalList::print(){
         temp = temp->next;
     }
 
-    std::cout << temp->value << " " << "rozmiar: " << rozmiar << std::endl;
+    std::cout << temp->value << " " << "rozmiar: " << size << std::endl;
 }
 
 int main(){
     BidirectionalList * list = new BidirectionalList();
-    list->add_to_end(5);
-    list->add_to_end(4);
-    list->add_to_end(2342);
-    list->add_to_end(232342);  
-    list->add_to_beginning(1);
-    list->add_to_end(4);  
-    list->add_to_beginning(2);
-    list->search(232342);
+    // list->add_to_end(5);
+    // list->add_to_end(4);
+    // list->add_to_end(2342);
+    // list->add_to_end(232342);  
+    // list->add_to_beginning(1);
+    // list->add_to_end(4);  
+    // list->add_to_beginning(2);
+    // list->print();
+    // list->add_to_index(41, 7);
+    // list->add_to_index(41, 0);
+    // list->print();
+    // list->delete_beginning();
+    // list->print();
+    list->add_to_index(4,1);
     list->print();
     list->delete_beginning();
-    list->delete_end();
     list->print();
 }

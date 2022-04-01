@@ -1,22 +1,10 @@
-
-class BidirectionalList
+class Table
 {
-
-    // struktura przechowująca wartość elementu oraz wskaźniki do poprzedniego i następnego elementu
-    struct list_element
-    {
-        int value;
-        list_element *previous;
-        list_element *next;
-    };
-    
-    
-    
+    private:
+        int * start;
+        int rozmiar;
     public:
-
-        //konstruktor
-        BidirectionalList();
-
+        Table();
         // DODAWANIE ELEMENTU
         // dodanie elementu na poczatek
         void add_to_beginning(int value);
@@ -33,16 +21,9 @@ class BidirectionalList
         // usuniecie w konkretnym miejscu
         void delete_at_index(int value);
 
-        // wyszukanie elementu w liscie
+        // wyszukanie elementu w tablicy
         void search(int value);
 
         // wypisanie listy
         void print();
-
-    private:
-        // wskaznik na pierwszy element w liscie
-        list_element *start;
-        // zmienna przechowujaca rozmiar listy
-        unsigned size;
 };
-
