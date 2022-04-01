@@ -26,7 +26,6 @@ void BidirectionalList::add_to_beginning(int value)
     start = to_add;
     size++;
     }
-
 }
 void BidirectionalList::delete_beginning()
 {
@@ -64,6 +63,7 @@ void BidirectionalList::delete_end()
     }
     else
     {
+
         list_element * temp = start;
         while(temp -> next)
             temp = temp -> next;
@@ -210,32 +210,34 @@ void BidirectionalList::print()
     list_element * temp = start;
 
     while(temp->next!=NULL){
-        std::cout << temp->value << " ";
-        temp = temp->next;
+        std::cout << temp -> value << " ";
+        temp = temp -> next;
     }
 
-    std::cout << temp->value << " " << "rozmiar: " << size << std::endl;
+    std::cout << temp -> value << " " << "rozmiar: " << size << std::endl;
 }
 
 int main(){
     BidirectionalList * list = new BidirectionalList();
 
     list -> add_to_beginning(4);
-    // list -> add_to_end(5);
-    // list -> add_to_end(6);
-    // list -> add_to_end(7);
+    list -> add_to_end(5);
+    list -> add_to_end(6);
+    list -> add_to_end(7);
 
 
 
-    // list -> add_to_index(2, 1);
+    list -> add_to_index(2, 1);
 
     list -> print();
 
 
     list -> delete_at_index(0);
+    list -> delete_at_index(0);
+
     list -> print();
 
-    list -> add_to_beginning(6);
+    list -> add_to_beginning(1);
     list -> add_to_end(6);
 
 

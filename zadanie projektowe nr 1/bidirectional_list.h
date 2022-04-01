@@ -9,9 +9,6 @@ class BidirectionalList
         list_element *previous;
         list_element *next;
     };
-    
-    
-    
     public:
 
         //konstruktor
@@ -42,6 +39,8 @@ class BidirectionalList
     private:
         // wskaznik na pierwszy element w liscie
         list_element *start;
+        // wskaznik na pierwszy element w liscie
+        list_element *final;
         // zmienna przechowujaca rozmiar listy
         unsigned size;
 };
