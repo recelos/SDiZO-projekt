@@ -12,4 +12,5 @@ class Heap
         void add(int value);
         void print();
         void search(int value);
+        void fill_random(int quantity, int range);
 };

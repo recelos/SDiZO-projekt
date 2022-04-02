@@ -1,9 +1,12 @@
 #include "bidirectional_list.h"
 #include <iostream>
+#include <ctime>
+
 
 BidirectionalList::BidirectionalList()
 {
     start = NULL;
+    end = NULL;
     size = 0;
 }
 
@@ -15,62 +18,67 @@ void BidirectionalList::add_to_beginning(int value)
         start->value=value;
         start->previous=NULL;
         start->next=NULL;
+        end = start;
         size=1;
-    }
+    } 
     else
     {    
     list_element * to_add = new list_element;
-    to_add->value = value;
-    to_add->next = start;
-    start->previous = to_add;
+    to_add -> value = value;
+    to_add -> next = start;
+    start -> previous = to_add;
     start = to_add;
     size++;
     }
 }
 void BidirectionalList::delete_beginning()
 {
-    if(start == NULL)
+    if(size == 0)
     {
+        std::cout << "Brak elementow do usuniecia\n";
         return;
-    }
-    else if (start->next == NULL)
+    }    
+    list_element * temp = start -> next;
+
+    delete start;
+
+    if(size > 1)
     {
-        delete start;
-        start = NULL;
-        size = 0;
-    }
+        temp -> previous = NULL;
+        start = temp;
+    }  
     else
     {
-        start = start->next;
-        delete start->previous;
-        start->previous = NULL;
-        size--;
+        start = NULL;
+        end = NULL;
     }
+    size--;
 }
 
 void BidirectionalList::delete_end()
 {
-    if(start == NULL)
+    if(size == 0)
     {
-        std::cout << "Brak elementu do usuniecia\n";
+        std::cout << "Brak elementow do usuniecia\n";
         return;
     }
-    else if (start->next == NULL)
+    
+    list_element * temp = end -> previous;
+
+    delete end;
+
+    if(size > 1)
     {
-        delete start;
-        start = NULL;
-        size = 0;
-    }
+        temp -> next = NULL;
+        end = temp;
+    }  
     else
     {
-
-        list_element * temp = start;
-        while(temp -> next)
-            temp = temp -> next;
-        temp -> previous -> next = NULL;
-        temp = NULL;
-        --size;
+        start = NULL;
+        end = NULL;
     }
+    size--;
+
 }
 
 
@@ -82,20 +90,22 @@ void BidirectionalList::add_to_end(int value)
         start->value=value;
         start->previous=NULL;
         start->next=NULL;
+        end = start;
         size = 1;
     }
     else
     {
-        list_element * temp = start;
+        // list_element * temp = start;
 
-        while (temp->next)
-            temp = temp->next;
+        // while (temp->next)
+        //     temp = temp->next;
         
         list_element * to_add = new list_element;
-        temp->next = to_add;
-        to_add->value = value;
-        to_add->previous = temp;
-        to_add->next = NULL;
+        end -> next = to_add;
+        to_add -> value = value;
+        to_add -> previous = end;
+        to_add -> next = NULL;
+        end = to_add;
         size++;
     }
 }
@@ -113,9 +123,21 @@ void BidirectionalList::add_to_index(int index, int value)
 
     else
     {
-        list_element * temp = start;
-        for (int i = 1; i < index; i++)
-            temp = temp -> next;
+        list_element * temp;
+        if(index < (size / 2))
+        {
+            temp = start;
+            for (int i = 1; i < index; i++)
+                temp = temp -> next;
+            
+
+        }
+        else
+        {
+            temp = end;
+            for (int i = 0; i < size - index; i++)
+                temp = temp -> previous;
+        }
         
         list_element * to_add = new list_element;
         to_add -> value = value;
@@ -184,7 +206,7 @@ void BidirectionalList::search(int value)
         {
             if(temp->value == value)
             {
-                std::cout << "Znaleziono element " << value << " na indeksie: " << i << std::endl;
+                // std::cout << "Znaleziono element " << value << " na indeksie: " << i << std::endl;
                 return;
             } 
             temp = temp->next;
@@ -192,10 +214,10 @@ void BidirectionalList::search(int value)
         }
         if(temp->value == value)
         {
-            std::cout << "Znaleziono element " << value << " na indeksie: " << i << std::endl;
+            // std::cout << "Znaleziono element " << value << " na indeksie: " << i << std::endl;
             return;
         }
-        std::cout << "Nie znaleziono elementu " << value << " w liscie\n";
+        // std::cout << "Nie znaleziono elementu " << value << " w liscie\n";
     }
 }
 
@@ -209,7 +231,10 @@ void BidirectionalList::print()
 
     list_element * temp = start;
 
-    while(temp->next!=NULL){
+    std::cout << "L: ";
+
+    while(temp->next!=NULL)
+    {
         std::cout << temp -> value << " ";
         temp = temp -> next;
     }
@@ -217,32 +242,30 @@ void BidirectionalList::print()
     std::cout << temp -> value << " " << "rozmiar: " << size << std::endl;
 }
 
-int main(){
-    BidirectionalList * list = new BidirectionalList();
+void BidirectionalList::print_inverted()
+{
+    if(!start)
+    {
+        std::cout << "Lista jest pusta\n";
+        return;
+    }  
 
-    list -> add_to_beginning(4);
-    list -> add_to_end(5);
-    list -> add_to_end(6);
-    list -> add_to_end(7);
+    std::cout << "L: ";
+    list_element * temp = end;
+    while(temp->previous!=NULL)
+    {
+        std::cout << temp -> value << " ";
+        temp = temp -> previous;
+    }
 
-
-
-    list -> add_to_index(2, 1);
-
-    list -> print();
-
-
-    list -> delete_at_index(0);
-    list -> delete_at_index(0);
-
-    list -> print();
-
-    list -> add_to_beginning(1);
-    list -> add_to_end(6);
-
-
-    list -> print();
-
-    // list->search(345);
-    list->search(6);
+    std::cout << temp -> value << " " << "rozmiar: " << size << std::endl;
+}
+void BidirectionalList::fill_random(int quantity, int range)
+{
+    srand(time(0));
+    for (int i = 0; i < quantity; i++)
+    {
+        int to_add = 1 + rand() % range;
+        add_to_end(to_add);
+    }
 }

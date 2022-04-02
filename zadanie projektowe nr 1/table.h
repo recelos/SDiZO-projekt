@@ -26,6 +26,8 @@ class Table
         // wyszukanie elementu w tablicy
         void search(int value);
 
+        void fill_random(int quantity, int range);
+
         // wypisanie listy
         void print();
 };

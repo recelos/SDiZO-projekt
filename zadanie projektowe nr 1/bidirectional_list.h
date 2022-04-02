@@ -35,12 +35,15 @@ class BidirectionalList
 
         // wypisanie listy
         void print();
+        void print_inverted();
+
+        void fill_random(int quantity, int range);
 
     private:
         // wskaznik na pierwszy element w liscie
         list_element *start;
         // wskaznik na pierwszy element w liscie
-        list_element *final;
+        list_element *end;
         // zmienna przechowujaca rozmiar listy
         unsigned size;
 };

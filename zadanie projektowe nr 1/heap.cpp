@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 #include "heap.h"
 
 Heap::Heap()
@@ -23,6 +24,13 @@ void Heap::add(int value)
 
 void Heap::extract_max()
 {
+
+    if (size==0)
+    {
+        std::cout << "Kopiec jest pusty";
+        return;
+    }
+    
     int temp = array[size-1];
     array[size-1] = array[0];
     array[0] = temp;
@@ -82,41 +90,84 @@ void Heap::search(int value)
     std::cout << "Nie znaleziono elementu:"  << value << " w kopcu\n";
 
 }
-
 void Heap::print()
 {
+    // do pietnasu wezlow wyswietla w postaci piramidy
+    if (size <= 15 && size!=0)
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            std::cout << " ";
+        }
+        std::cout << array[0] << std::endl;
+
+        for (int i = 0; i < 7; i++)
+        {
+            std::cout << " ";
+        }
+        for (int i = 1; i < 3; i++)
+        {
+            if(i>=size) return;
+            std::cout << array[i] << " ";
+        }
+        std::cout << std::endl;
+        for (int i = 0; i < 5; i++)
+        {
+            std::cout << " ";
+        }
+        for (int i = 3; i < 7; i++)
+        {
+            if(i>=size) return;
+            std::cout << array[i] << " ";
+        }
+        std::cout << std::endl;
+        for (int i = 0; i < 3; i++)
+        {
+            std::cout << " ";
+        }
+        for (int i = 7; i < 15; i++)
+        {
+            if(i>=size) return;
+            std::cout << array[i] << " ";
+        }
+        return;
+    }
+    
+
+
     for (int i = 0; i < size; i++)
     {
         std::cout << array[i] << "(" << i << ") ";
     }
     std::cout << std::endl;
 }
-int main()
+
+void Heap::fill_random(int quantity, int range)
 {
-    Heap * heap = new Heap();
-
-    heap->add(4);
-    heap->add(2);
-    heap->add(3);
-    heap->add(4);
-    heap->add(12);
-    heap->add(6);
-    heap->add(7);
-    heap->add(3);
-    heap->add(3);
-    heap->add(423);
-    heap->add(111);
-    heap->print();
-
-    heap->search(1231);
-
-    // heap->extract_max();
-    // heap->print();
-    
-    // heap->extract_max();
-    // heap->print();
-    
-    // heap->extract_max();
-    // heap->print();
-    return 0;
+    srand(time(0));
+    for (int i = 0; i < quantity; i++)
+    {
+        int to_add = 1 + rand() % range;
+        add(to_add);
+    }
 }
+// int main()
+// {
+//     Heap * heap = new Heap();
+
+//     heap -> fill_random(5,9);
+//     heap -> print();
+//     // heap -> add(18);
+//     // std::cout << std::endl;
+//     // heap -> print();
+//     // heap -> add(13);
+//     // std::cout << std::endl;
+//     // heap -> print();
+//     // heap -> add(14);
+//     // std::cout << std::endl;
+//     // heap -> print();
+//     // heap -> add(9);
+//     // std::cout << std::endl;
+//     // heap -> print();
+//     return 0;
+// }

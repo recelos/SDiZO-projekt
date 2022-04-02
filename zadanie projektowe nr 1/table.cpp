@@ -39,7 +39,7 @@ void Table::add_to_end(int value)
 void Table::add_to_index(int index, int value)
 {
     if(index < 0 || index > size)
-        std::cout << "Indeks wykracza poza zakres tablicy" << std::endl;
+        std::cout << "Indeks wykracza poza zakres tablicy" << std::endl << std::endl;
     else
     {
         int * temp = new int[size + 1];
@@ -65,7 +65,7 @@ void Table::add_to_index(int index, int value)
 void Table::delete_beginning()
 {
     if(size == 0)
-        std::cout << "Brak elementu do usuniecia\n";
+        std::cout << "Brak elementu do usuniecia\n\n";
     else
     {
         int * temp = new int[size-1];
@@ -83,7 +83,7 @@ void Table::delete_beginning()
 void Table::delete_end()
 {
     if(size == 0)
-        std::cout << "Brak elementu do usuniecia\n";
+        std::cout << "Brak elementu do usuniecia\n\n";
     else
     {
         int * temp = new int[size-1];
@@ -99,7 +99,7 @@ void Table::delete_end()
 void Table::delete_at_index(int index)
 {
     if(index < 0 || index > size || size == 0)
-        std::cout << "Brak elementu do usuniecia\n";
+        std::cout << "Brak elementu do usuniecia\n\n";
     else
     {
         int * temp = new int[size-1];
@@ -124,47 +124,41 @@ void Table::search(int value)
     {
         if(temp[i] == value)
         {
-            std::cout << "Znaleziono element " << value << " na indeksie: " << i << std::endl;
+            std::cout << "Znaleziono element " << value << " na indeksie: " << i << std::endl << std::endl;
             return;
         }
     }
-    std::cout << "Nie znaleziono elementu " << value << " w tablicy\n";
+    std::cout << "Nie znaleziono elementu " << value << " w tablicy\n\n";
 }
 
 
 void Table::print()
 {
     int * temp = start;
+    std::cout << "T: ";
     for(int i=0; i<size; i++)
     {
         std::cout << temp[i] << " "; 
     }
-    std::cout << "rozmiar tablicy: " << size << std::endl;
+    std::cout << "\nrozmiar tablicy: " << size << std::endl;
 }
 
-int main()
+void Table::fill_random(int quantity, int range)
 {
-    Table * table = new Table();
-
-    table->add_to_beginning(4);
-    table->print();
-    table->add_to_beginning(2);
-    table->print();
-    table->add_to_end(7);
-    table->print();
-
-    table->add_to_beginning(1);
-    table->print();
-
-    table->add_to_index(0, 5);
-    
-
-    table->print();
-
-    table->delete_at_index(2);
-    table->print();
-
-    table->search(7);
-
-    return 0;
+    srand(time(0));
+    for (int i = 0; i < quantity; i++)
+    {
+        int to_add = 1 + rand() % range;
+        add_to_end(to_add);
+    }
 }
+
+// int main()
+// {
+//     Table * table = new Table();
+
+//     table -> fill_random(10,20);
+//     table -> print();
+
+//     return 0;
+// }
