@@ -34,13 +34,9 @@ void BidirectionalList::add_to_beginning(int value)
 void BidirectionalList::delete_beginning()
 {
     if(size == 0)
-    {
-        std::cout << "Brak elementow do usuniecia\n";
         return;
-    }    
-    list_element * temp = start -> next;
 
-    delete start;
+    list_element * temp = start -> next;
 
     if(size > 1)
     {
@@ -58,14 +54,9 @@ void BidirectionalList::delete_beginning()
 void BidirectionalList::delete_end()
 {
     if(size == 0)
-    {
-        std::cout << "Brak elementow do usuniecia\n";
         return;
-    }
     
     list_element * temp = end -> previous;
-
-    delete end;
 
     if(size > 1)
     {
@@ -94,12 +85,7 @@ void BidirectionalList::add_to_end(int value)
         size = 1;
     }
     else
-    {
-        // list_element * temp = start;
-
-        // while (temp->next)
-        //     temp = temp->next;
-        
+    {       
         list_element * to_add = new list_element;
         end -> next = to_add;
         to_add -> value = value;
@@ -113,7 +99,7 @@ void BidirectionalList::add_to_end(int value)
 void BidirectionalList::add_to_index(int index, int value)
 {
     if((!start && index!=0) || ( index < 0 || index > size))
-        std::cout << "Indeks wykracza poza zakres listy\n";
+        return;
 
     else if(index==0)    
         add_to_beginning(value);
@@ -153,17 +139,14 @@ void BidirectionalList::add_to_index(int index, int value)
 void BidirectionalList::delete_at_index(int index)
 {
     if(( index < 0 || index >= size))
-    {
-        std::cout << "Indeks wykracza poza zakres listy\n";
-    }
+        return;
+
     else if(index==0)
-    {
         delete_beginning();
-    }
+
     else if (index==size-1)
-    {
         delete_end();
-    }
+
     else
     {
         list_element * temp = start;
@@ -175,13 +158,11 @@ void BidirectionalList::delete_at_index(int index)
         temp -> next = news -> next;
         temp -> next -> previous = news;
 
-        delete[] news;
 
         size--;
 
         if (size == 0)
         {
-            delete start;
             start = new list_element;
             start -> next = NULL;
             start -> previous = NULL;
@@ -195,7 +176,29 @@ void BidirectionalList::delete_at_index(int index)
 void BidirectionalList::search(int value)
 {
     if(!start)
+        return;
+
+    else
     {
+        list_element * temp = start;
+        int i = 0;
+        while(temp->next)
+        {
+            if(temp->value == value)
+                return;
+
+            temp = temp->next;
+            i++;
+        }
+        if(temp->value == value)
+            return;
+    }
+}
+void BidirectionalList::search_and_print(int value)
+{
+    if(!start)
+    {
+        return;
         std::cout << "Lista jest pusta\n" << std::endl;
     }
     else
@@ -206,7 +209,7 @@ void BidirectionalList::search(int value)
         {
             if(temp->value == value)
             {
-                // std::cout << "Znaleziono element " << value << " na indeksie: " << i << std::endl;
+                std::cout << "Znaleziono element " << value << " na indeksie: " << i << std::endl;
                 return;
             } 
             temp = temp->next;
@@ -214,12 +217,14 @@ void BidirectionalList::search(int value)
         }
         if(temp->value == value)
         {
-            // std::cout << "Znaleziono element " << value << " na indeksie: " << i << std::endl;
+            std::cout << "Znaleziono element " << value << " na indeksie: " << i << std::endl;
             return;
         }
-        // std::cout << "Nie znaleziono elementu " << value << " w liscie\n";
+        std::cout << "Nie znaleziono elementu " << value << " w liscie\n";
     }
 }
+
+
 
 void BidirectionalList::print()
 {
@@ -233,13 +238,14 @@ void BidirectionalList::print()
 
     std::cout << "L: ";
 
+    int i = 0;
     while(temp->next!=NULL)
     {
-        std::cout << temp -> value << " ";
+        std::cout << temp -> value << "(" << i++ << ") ";
         temp = temp -> next;
     }
 
-    std::cout << temp -> value << " " << "rozmiar: " << size << std::endl;
+    std::cout << temp -> value <<"(" << i++ << ") "<< "rozmiar: " << size << std::endl;
 }
 
 void BidirectionalList::print_inverted()

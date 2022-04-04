@@ -32,6 +32,7 @@ class BidirectionalList
 
         // wyszukanie elementu w liscie
         void search(int value);
+        void search_and_print(int value);
 
         // wypisanie listy
         void print();

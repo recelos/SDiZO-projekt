@@ -1,0 +1,2 @@
+main: main.cpp heap_benchmark.cpp array_benchmark.cpp list_benchmark.cpp heap.cpp array.cpp bidirectional_list.cpp
+	g++ main.cpp heap_benchmark.cpp array_benchmark.cpp list_benchmark.cpp heap.cpp array.cpp bidirectional_list.cpp -o main.exe 

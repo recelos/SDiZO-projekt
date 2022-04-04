@@ -1,4 +1,4 @@
-class Table
+class Array
 {
     private:
         // wskaznik na pierwszy element tablicy
@@ -6,7 +6,8 @@ class Table
         // zmienna przechowujaca rozmiar tablicy
         unsigned size;
     public:
-        Table();
+        Array();
+        ~Array();
         // DODAWANIE ELEMENTU
         // dodanie elementu na poczatek
         void add_to_beginning(int value);
@@ -25,7 +26,7 @@ class Table
 
         // wyszukanie elementu w tablicy
         void search(int value);
-
+        void search_and_print(int value);
         void fill_random(int quantity, int range);
 
         // wypisanie listy

@@ -1,51 +1,46 @@
 #include <iostream>
 #include "bidirectional_list.h"
-#include "table.h"
+#include "array.h"
 #include "heap.h"
+#include "array_benchmark.h"
+#include "heap_benchmark.h"
+#include "list_benchmark.h"
 
-
-void test_table();
+void test_array();
 void test_list();
 void test_heap();
+void benchmark();
+void test();
 
 int main()
 {
     int run = 1;
-    while(run)
+
+
+    while (run)
     {
-        int input;
-        std::cout << "Wybierz strukture do testowania: \n";
-        std::cout << "1. Tablica \n";
-        std::cout << "2. Lista dwukierunkowa \n";
-        std::cout << "3. Kopiec \n";
-        std::cout << "4. Koniec programu \n";
-        std::cin >> input;
+    std::cout << "1. Testy czasowe\n";
+    std::cout << "2. Testy reczne\n";
+    std::cout << "3. Koniec programu\n";
 
-        switch (input)
-        {
-        case 1:
-            test_table();
-            break;
-        case 2:
-            test_list();
-            break;
-        case 3:
-            test_heap();
-            break;
-        case 4:
-            run = 0;
-            break;
-        default:
-            break;
-        }
+    int input;
+    std::cin >> input;
 
+    system("CLS");
+
+    if(input == 1)
+        benchmark();
+    if(input==2)
+        test();       
+    if(input==3)
+        run = 0;
     }
     return 0;
 }
 
-void test_table()
+void test_array()
 {
-    Table * table = new Table();
+    Array * array = new Array();
     int run = 1;
     while (run)
     {
@@ -61,7 +56,7 @@ void test_table()
         std::cout << "7. Wyszukaj w tablicy\n";
         std::cout << "8. Wypelnij losowo\n";
         std::cout << "9. Wroc\n\n";
-        table -> print();
+        array -> print();
 
         std::cin >> input;
 
@@ -72,7 +67,7 @@ void test_table()
                 int to_add1;
                 std::cin >> to_add1;
                 system("CLS");
-                table -> add_to_beginning(to_add1);
+                array -> add_to_beginning(to_add1);
                 break;
 
             case 2:
@@ -80,7 +75,7 @@ void test_table()
                 int to_add2;
                 std::cin >> to_add2;
                 system("CLS");
-                table -> add_to_end(to_add2);
+                array -> add_to_end(to_add2);
                 break;
             case 3:
                 int to_add3;
@@ -90,29 +85,29 @@ void test_table()
                 std::cout << "Podaj liczbe do dodania: ";
                 std::cin >> to_add3;
                 system("CLS");
-                table -> add_to_index(index1, to_add3);
+                array -> add_to_index(index1, to_add3);
                 break;
             case 4:
                 system("CLS");
-                table -> delete_beginning();
+                array -> delete_beginning();
                 break;
             case 5:
                 system("CLS");
-                table -> delete_end();
+                array -> delete_end();
                 break;
             case 6:
                 int index2;
                 std::cout << "Podaj index: ";
                 std::cin >> index2;
                 system("CLS");
-                table -> delete_at_index(index2);
+                array -> delete_at_index(index2);
                 break;
             case 7:
                 int to_find;
                 std::cout << "Podaj wartosc: ";
                 std::cin >> to_find;
                 system("CLS");
-                table -> search(to_find);
+                array -> search_and_print(to_find);
                 break;
             case 8:
                 int quantity, range;
@@ -121,17 +116,18 @@ void test_table()
                 std::cout << "Podaj zakres: ";
                 std::cin >> range;
                 system("CLS");
-                table -> fill_random(quantity, range);                
+                array -> fill_random(quantity, range);                
                 break;
             case 9:
                 system("CLS");
                 run = 0;
                 break;
             default:
+                system("CLS");
                 break;
         }
         if(run == 0)
-            delete table;
+            delete array;
     }
 }
 void test_list()
@@ -205,7 +201,7 @@ void test_list()
                 std::cout << "Podaj wartosc: ";
                 std::cin >> to_find;
                 system("CLS");
-                list -> search(to_find);
+                list -> search_and_print(to_find);
                 break;
             case 8:
                 system("CLS");
@@ -222,8 +218,10 @@ void test_list()
                 break;
             case 10:
                 run = 0;
+                system("CLS");
                 break;
             default:
+                system("CLS");
                 break;
         }
         if (run == 0)
@@ -266,7 +264,7 @@ void test_heap()
                 std::cout << "Podaj wartosc: ";
                 std::cin >> to_find;
                 system("CLS");
-                heap->search(to_find);
+                heap->search_and_print(to_find);
                 break;
             case 4:
                 int quantity, range;
@@ -291,4 +289,60 @@ void test_heap()
         }
         
     }
+}
+
+
+void test()
+{
+    int run = 1;
+    while(run)
+    {
+        int input;
+        std::cout << "Wybierz strukture do testowania: \n";
+        std::cout << "1. Tablica \n";
+        std::cout << "2. Lista dwukierunkowa \n";
+        std::cout << "3. Kopiec \n";
+        std::cout << "4. Wroc \n";
+        std::cin >> input;
+
+        system("CLS");
+
+        switch (input)
+        {
+        case 1:
+            test_array();
+            break;
+        case 2:
+            test_list();
+            break;
+        case 3:
+            test_heap();
+            break;
+        case 4:
+            run = 0;
+            break;
+        default:
+            break;
+        }
+
+    }
+
+}
+
+
+void benchmark()
+{
+    std::cout << "Podaj liczbe elementow: ";
+    int input;
+    std::cin >> input;
+    
+    ArrayBenchmark * ab = new ArrayBenchmark(input);
+    delete ab;
+
+    HeapBenchmark * hb = new HeapBenchmark(input);
+    delete hb;
+
+    ListBenchmark * lb = new ListBenchmark(input);
+    delete lb;
+
 }
