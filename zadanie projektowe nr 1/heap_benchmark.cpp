@@ -89,22 +89,22 @@ void HeapBenchmark::heap_test_search(int data_quantity)
 
     for (int i = 0; i < 100; i++)
     {
-    Heap * heap = new Heap();
-    heap -> fill_random(data_quantity, data_quantity);
+        Heap * heap = new Heap();
+        heap -> fill_random(data_quantity, data_quantity);
 
-    long long int frequency, start, end, elapsed;
-    QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
-    
-    int to_search = data_quantity/2;
-    
-    start = read_QPC1();
-    heap -> search(to_search);
-    end = read_QPC1();
+        long long int frequency, start, end, elapsed;
+        QueryPerformanceFrequency((LARGE_INTEGER *)&frequency);
+        
+        int to_search = data_quantity/2;
+        
+        start = read_QPC1();
+        heap -> search(to_search);
+        end = read_QPC1();
 
-    elapsed = end - start;
-    results[i] = 1000000000.0 * elapsed / frequency;
+        elapsed = end - start;
+        results[i] = 1000000000.0 * elapsed / frequency;
 
-    delete heap;
+        delete heap;
 
     }
     int result = 0;
